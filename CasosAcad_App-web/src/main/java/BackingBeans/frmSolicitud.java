@@ -39,6 +39,10 @@ public class frmSolicitud implements Serializable{
     private Solicitud solicitud;
     private LazyDataModel<Solicitud> modeloSolicitud;
 
+    public void setModeloSolicitud(LazyDataModel<Solicitud> modeloSolicitud) {
+        this.modeloSolicitud = modeloSolicitud;
+    }
+
     
     
     public boolean isEditar() {
@@ -72,10 +76,7 @@ public class frmSolicitud implements Serializable{
     /**
      * Creates a new instance of frmSolicitud
      */
-    public void setModeloSolicitud(LazyDataModel<Solicitud> modeloSolicitud) {
-        this.modeloSolicitud = modeloSolicitud;
-    }
-    
+   
     @PostConstruct
     public void Inicio(){
     
@@ -116,7 +117,7 @@ public class frmSolicitud implements Serializable{
         
     }
     public void Limpiar(){
-    RequestContext.getCurrentInstance().reset("");
+    RequestContext.getCurrentInstance().reset("vistaSolicitud");
     }
     
     public void btnNuevo(ActionEvent ae){
@@ -156,7 +157,7 @@ public class frmSolicitud implements Serializable{
         }
     }
     
-     public void btnEliminarAction(ActionEvent ae) {
+     public void btnEliminar(ActionEvent ae) {
         try {
             if(this.solicitud != null && this.solicitudFacade!= null){
                 boolean resultado = this.solicitudFacade.remove(solicitud);
