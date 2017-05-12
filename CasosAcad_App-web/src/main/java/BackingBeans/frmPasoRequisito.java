@@ -251,7 +251,7 @@ public class frmPasoRequisito implements Serializable{
     
     public void limpiar(){
       
-        RequestContext.getCurrentInstance().reset(":tabViewPasoRequisito:pasoRequisitoForm");
+        RequestContext.getCurrentInstance().reset("");
         this.registroPasoRequisito= new PasoRequisito();
     }
     

@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -43,6 +44,15 @@ public class frmPaso implements Serializable{
     private Paso paso;
     private boolean editar, agregar;
     private TipoPaso tipoP;
+    private List<TipoPaso> tipos;
+
+    public List<TipoPaso> getTipos() {
+        return tipos;
+    }
+
+    public void setTipos(List<TipoPaso> tipos) {
+        this.tipos = tipos;
+    }
 
     public Paso getPaso() {
         return paso;
@@ -172,7 +182,7 @@ public class frmPaso implements Serializable{
     }
     
     public void Limpiar(){
-    RequestContext.getCurrentInstance().reset("vistaEditar");
+    RequestContext.getCurrentInstance().reset("vistaPaso");
     }
     
     public void btnNuevo(ActionEvent ae){
@@ -212,7 +222,7 @@ public class frmPaso implements Serializable{
         }
     }
     
-     public void btnEliminarAction(ActionEvent ae) {
+     public void btnEliminar(ActionEvent ae) {
         try {
             if(this.tipoP != null && this.tipoPasoFacade!= null){
                 boolean resultado = this.tipoPasoFacade.remove(tipoP);
@@ -235,6 +245,33 @@ public class frmPaso implements Serializable{
      * Creates a new instance of frmPaso
      */
     public frmPaso() {
+    }
+    
+     public Integer getTipoSeleccionado(){
+     if(paso!= null){
+            if(paso.getIdTipoPaso()!= null){
+                return this.paso.getIdTipoPaso().getIdTipoPaso();
+            } else {
+                return null;
+            }         
+        } else {
+            return null;
+        }
+    }
+    
+    public void setTipoSeleccionado(Integer idTipo){
+        if(idTipo >= 0 && !this.tipos.isEmpty()){
+            for(TipoPaso tpe : this.getTipos()) {
+                if(Objects.equals(tpe.getIdTipoPaso(), idTipo)) {
+                    if(this.paso.getIdTipoPaso() != null) {
+                        this.paso.getIdTipoPaso().setIdTipoPaso(idTipo);
+                    } else {
+                        this.paso.setIdTipoPaso(tpe);
+                    }
+                }
+            }
+        }
+    
     }
     
 }

@@ -115,7 +115,7 @@ public class frmTipoRequisito implements Serializable{
     }
     
     public void Limpiar(){
-        RequestContext.getCurrentInstance().reset("vistaEditar");
+        RequestContext.getCurrentInstance().reset("vistaRequisito");
         this.tipoR= new TipoRequisito();
     }
     
@@ -156,7 +156,7 @@ public class frmTipoRequisito implements Serializable{
         }
     }
     
-     public void btnEliminarAction(ActionEvent ae) {
+     public void btnEliminar(ActionEvent ae) {
         try {
             if(this.tipoR != null && this.tipoRequisitoFacade != null){
                 boolean resultado = this.tipoRequisitoFacade.remove(tipoR);

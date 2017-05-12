@@ -48,12 +48,12 @@ public class frmTipoPaso implements Serializable {
         this.modeloTipo = modeloTipo;
     }
 
-    public TipoPaso getTipoR() {
+    public TipoPaso getTipoP() {
         return tipoP;
     }
 
-    public void setTipoR(TipoPaso tipoR) {
-        this.tipoP = tipoR;
+    public void setTipoP(TipoPaso tipoP){
+        this.tipoP = tipoP;
     }
  
     public boolean isEditar() {
@@ -112,7 +112,7 @@ public class frmTipoPaso implements Serializable {
     }
     
     public void Limpiar(){
-        RequestContext.getCurrentInstance().reset("vistaEditar");
+        RequestContext.getCurrentInstance().reset("vistaTipoPaso");
         this.tipoP= new TipoPaso();
     }
     
@@ -153,7 +153,7 @@ public class frmTipoPaso implements Serializable {
         }
     }
     
-     public void btnEliminarAction(ActionEvent ae) {
+     public void btnEliminar(ActionEvent ae) {
         try {
             if(this.tipoP != null && this.tipoPasoFacade != null){
                 boolean resultado = this.tipoPasoFacade.remove(tipoP);

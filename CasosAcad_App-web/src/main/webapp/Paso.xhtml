@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+       <p:panel header="Pasos para Gestiones Académicas" closable="false" toggleable="false" >
+            <h:panelGrid>
+                <h:form id="tablaPaso">
+                    <p:dataTable value="#{frmPaso.modeloPaso}"
+                                 var="p"
+                                 rows="10"
+                                 paginator="true"
+                                 lazy="true"
+                                 selectionMode="single"
+                                 selection="#{frmPaso.paso}"
+                                 style="color: #ff5252"
+                                 >
+                        <p:column headerText="ID">
+                            <p:outputLabel value="#{p.idPaso}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Tipo Paso">
+                            <p:outputLabel value="#{p.idTipoPaso.paso}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Paso">
+                            <p:outputLabel value="#{p.paso}"></p:outputLabel>
+                        </p:column>                                      
+                        <p:ajax update=":tabViewPaso" event="rowSelect" listener="${frmPaso.cambioTabla}"></p:ajax> 
+                    </p:dataTable>    
+                    <p:growl id="growl" life="2000" />
+                </h:form>
+            </h:panelGrid>
+        </p:panel>
+        
+        <div>
+        <p:tabView id="tabViewPaso"> 
+           <p:tab title="Formulario Paso" id="tabPaso"> 
+                <h:form id="vistaPaso">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="ID Paso" for="txtIdPaso" id="lblIdPaso"></p:outputLabel>
+                            <p:inputText id="txtIdPaso" value="#{frmPaso.paso.idPaso}" readonly="true"></p:inputText>
+                            <p:outputLabel value="Tipo Paso" for="cbTipoPaso" id="lblTipoPaso"></p:outputLabel>
+                            <h:selectOneMenu id="cbTipoPaso" value="#{frmPaso.tipoSeleccionado}" 
+                                                style="width: 200px" required="true" styleClass="center_content" >
+                                <f:selectItem itemLabel="Seleccione Tipo" itemValue="" />
+                                <f:selectItems value="#{frmPaso.tipos}" 
+                                               var="tipo" 
+                                               itemLabel="#{tipo.paso}" 
+                                               itemValue="#{tipo.idTipoPaso}">
+                                </f:selectItems>
+                            </h:selectOneMenu>
+                            <p:outputLabel value="Nombre" for="txtNombreP" id="lblNombreP"></p:outputLabel>
+                            <p:inputText id="txtNombreP" value="#{frmPaso.paso.paso}" required="true"></p:inputText>   
+                            <p:commandButton value="Nuevo" actionListener="#{frmPaso.btnNuevo}" update=":tabViewPaso:vistaPaso" >    
+                            </p:commandButton>
+                            <p:commandButton value="Modificar" actionListener="#{frmPaso.btnModificar}" update=":tablaPaso :tabViewPaso:vistaPaso" rendered="${frmPaso.editar}" ></p:commandButton>                
+                            <p:commandButton value="Guardar" actionListener="#{frmPaso.btnGuardar}" update=":tablaPaso :tabViewPaso:vistaPaso" rendered="${!frmPaso.editar}"></p:commandButton> 
+                            <p:commandButton value="Eliminar" actionListener="#{frmPaso.btnEliminar}" update=":tablaPaso :tabViewPaso:vistaPaso">
+                                 <p:confirm header="Confirmación" message="¿Está seguro que desea eliminar este elemento?" icon="ui-icon-alert" />
+                            </p:commandButton>          
+                        </p:panelGrid> 
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                    </h:form>                
+           </p:tab> 
+            <p:tab title="Tabla Tipos de Paso" id="tabTipoPaso">
+                   <h:panelGrid>
+                <h:form id="tablaTipoPaso">
+                    <p:dataTable value="#{frmTipoPaso.modeloTipo}"
+                                 var="p"
+                                 rows="5"
+                                 paginator="true"
+                                 lazy="true"                               
+                                 >
+                        <p:column headerText="ID">
+                            <p:outputLabel value="#{p.idTipoPaso}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <p:outputLabel value="#{p.paso}"></p:outputLabel>
+                        </p:column>      
+                    </p:dataTable>                    
+                </h:form>
+            </h:panelGrid>                                
+            </p:tab>
+       </p:tabView>                        
+        </div>
+  
+    </h:body>
+</html>

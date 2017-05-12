@@ -173,7 +173,7 @@ public class frmRequisito implements Serializable{
     }
     
     public void Limpiar(){
-    RequestContext.getCurrentInstance().reset("vistaEditar");
+    RequestContext.getCurrentInstance().reset("vistaRequisito");
     }
     
     public void btnNuevo(ActionEvent ae){

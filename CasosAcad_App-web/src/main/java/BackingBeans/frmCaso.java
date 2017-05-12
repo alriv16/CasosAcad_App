@@ -240,7 +240,7 @@ public class frmCaso implements Serializable {
     
     
     public void Limpiar(){
-    RequestContext.getCurrentInstance().reset("vistaEditar");
+    RequestContext.getCurrentInstance().reset("");
     }
     
     public void btnNuevo(ActionEvent ae){
