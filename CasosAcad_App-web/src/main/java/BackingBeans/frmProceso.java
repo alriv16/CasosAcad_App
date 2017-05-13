@@ -170,7 +170,8 @@ public class frmProceso implements Serializable {
                     });
     }
  public void Limpiar(){
-    RequestContext.getCurrentInstance().reset("");
+    RequestContext.getCurrentInstance().reset(":vistaProceso");
+    this.proceso= new Proceso();
     }
     
     public void btnNuevo(ActionEvent ae){
@@ -210,7 +211,7 @@ public class frmProceso implements Serializable {
         }
     }
     
-     public void btnEliminarAction(ActionEvent ae) {
+     public void btnEliminar(ActionEvent ae) {
         try {
             if(this.proceso != null && this.procesoFacade!= null){
                 boolean resultado = this.procesoFacade.remove(proceso);
@@ -232,6 +233,7 @@ public class frmProceso implements Serializable {
      * Creates a new instance of frmProceso
      */
     public frmProceso() {
+        this.proceso= new Proceso();
     }
 
 }

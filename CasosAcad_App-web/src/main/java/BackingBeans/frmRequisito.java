@@ -6,6 +6,7 @@
 package BackingBeans;
 
 import Entities.CasosAcad.Requisito;
+import Entities.CasosAcad.TipoPaso;
 import Entities.CasosAcad.TipoRequisito;
 import SessionBeans.RequisitoFacadeLocal;
 import SessionBeans.TipoRequisitoFacadeLocal;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -32,15 +34,199 @@ import org.primefaces.model.SortOrder;
  */
 @Named(value = "frmRequisito")
 @ViewScoped
-public class frmRequisito implements Serializable{
+public class frmRequisito implements Serializable {
 
-    @EJB
-    private TipoRequisitoFacadeLocal tipoRequisitoFacade;
-
+    private LazyDataModel<Requisito> modeloRequisito;
+    private LazyDataModel<TipoRequisito> modeloTipoRequisitos;
+    private Requisito requisito; 
+    private TipoRequisito tipoRequisito;
+    private List<TipoRequisito> tipos;
+    private boolean editar=false;    
+    
     @EJB
     private RequisitoFacadeLocal requisitoFacade;
+    @EJB
+    private TipoRequisitoFacadeLocal tipoRequisitoFacade;
     
     
+    @PostConstruct
+    public void init(){
+        
+             this.tipos= tipoRequisitoFacade.findAll();
+        
+             setModeloRequisito(new LazyDataModel<Requisito>(){
+
+            @Override
+            public List<Requisito> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                List salida = new ArrayList();
+                if(requisitoFacade != null){
+                    this.setRowCount(requisitoFacade.count());
+                    int[] rango = new int[2];
+                    rango[0] = first;
+                    rango[1] = pageSize;
+                    salida = requisitoFacade.findRange(rango);
+                }
+                return salida;
+            }
+
+            @Override
+            public Object getRowKey(Requisito object) {
+                return object.getIdRequisito();
+            }
+
+            @Override
+            public Requisito getRowData(String rowKey) {
+                if(this.getWrappedData()!=null){
+                    List<Requisito> lista = (List<Requisito>) this.getWrappedData();
+                    if(!lista.isEmpty()) {
+                        for(Requisito get : lista) {
+                            if(get.getIdRequisito().compareTo(Integer.parseInt(rowKey))==0) {
+                                return get;
+                            }
+                        }
+                    }
+                }
+                return null;
+            }       
+        });
+
+             
+             setModeloTipoRequisitos(new LazyDataModel<TipoRequisito>(){
+
+            @Override
+            public List<TipoRequisito> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                List lista = new ArrayList();
+                if(tipoRequisitoFacade != null){
+                    this.setRowCount(tipoRequisitoFacade.count());
+                    int[] rango = new int[2];
+                    rango[0] = first;
+                    rango[1] = pageSize;
+                    lista = tipoRequisitoFacade.findRange(rango);
+                }
+                return lista;
+            }
+
+            @Override
+            public Object getRowKey(TipoRequisito object) {
+                return object.getIdTipoRequisito();
+            }
+
+            @Override
+            public TipoRequisito getRowData(String rowKey) {
+                if(this.getWrappedData()!=null){
+                    List<TipoRequisito> salida = (List<TipoRequisito>) this.getWrappedData();
+                    if(!salida.isEmpty()) {
+                        for(TipoRequisito get : salida) {
+                            if(get.getIdTipoRequisito().compareTo(Integer.parseInt(rowKey))==0) {
+                                return get;
+                            }
+                        }
+                    }
+                }
+                return null;
+            }       
+        });
+             
+             
+    }
+
+ public void cambioTabla(){
+        this.editar = true;
+    }
+    
+    public void btnNuevo(ActionEvent ae){
+        editar=false;
+        try{
+        limpiar();
+        
+        }catch(Exception e){
+        Logger.getLogger(getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
+        }
+    
+    }
+    
+    public void limpiar(){
+        RequestContext.getCurrentInstance().reset(":tabViewRequisito:edAddRequisito");
+        this.requisito=new Requisito();
+    }
+    
+          public void btnGuardar(ActionEvent ae){
+        try {    
+            if(this.requisito != null && this.requisitoFacade != null){
+                boolean resultado = this.requisitoFacade.create(requisito);
+                FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Creado con exito":"Error", null);
+                //this.agregar = !resultado;
+                FacesContext.getCurrentInstance().addMessage(null, msj);
+                limpiar();
+            }
+        } catch (Exception e) {
+           Logger.getLogger(getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
+        }
+     
+      }
+     
+     
+      public void btnModificar(ActionEvent ae){
+        try{
+            boolean resultado = this.requisitoFacade.editar(requisito); 
+            FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Modificado con exito":"Error", null);
+            //this.editar = resultado;
+            FacesContext.getCurrentInstance().addMessage(null, msj);
+            limpiar();
+        }catch(Exception e){
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
+        }
+    }
+public Integer getTipoSeleccionado(){
+     if(requisito!= null){
+            if(requisito.getIdTipoRequisito()!= null){
+                return this.requisito.getIdTipoRequisito().getIdTipoRequisito();
+            } else {
+                return null;
+            }         
+        } else {
+            return null;
+        }
+    }
+    
+    public void setTipoSeleccionado(Integer idTipo){
+        if(idTipo >= 0 && !this.tipos.isEmpty()){
+            for(TipoRequisito tre : this.getTipos()) {
+                if(Objects.equals(tre.getIdTipoRequisito(), idTipo)) {
+                    if(this.requisito.getIdTipoRequisito() != null) {
+                        this.requisito.getIdTipoRequisito().setIdTipoRequisito(idTipo);
+                    } else {
+                        this.requisito.setIdTipoRequisito(tre);
+                    }
+                }
+            }
+        }
+    
+    }
+    
+            public void btnEliminar(ActionEvent ae) {
+        try {
+            if(this.requisito != null && this.requisitoFacade != null){
+                boolean resultado = this.requisitoFacade.remove(requisito);
+                editar=!resultado;
+                FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Eliminado con exito":"Error", null);
+                FacesContext.getCurrentInstance().addMessage(null, msj);
+                 limpiar();
+                 
+            }
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
+        }
+    }
+
+    
+    
+    /**
+     * Creates a new instance of FrmRequisito
+     */
+    public frmRequisito() {
+        this.requisito=new Requisito();
+    }
 
     public LazyDataModel<Requisito> getModeloRequisito() {
         return modeloRequisito;
@@ -50,12 +236,38 @@ public class frmRequisito implements Serializable{
         this.modeloRequisito = modeloRequisito;
     }
 
+    public LazyDataModel<TipoRequisito> getModeloTipoRequisitos() {
+        return modeloTipoRequisitos;
+    }
+
+    public void setModeloTipoRequisitos(LazyDataModel<TipoRequisito> modeloTipo) {
+        this.modeloTipoRequisitos = modeloTipo;
+    }
+
     public Requisito getRequisito() {
         return requisito;
     }
 
-    public void setRequisito(Requisito requisito) {
-        this.requisito = requisito;
+    public void setRequisito(Requisito registro) {
+        this.requisito = registro;
+    }
+
+    
+    
+    public TipoRequisito getTipoRequisito() {
+        return tipoRequisito;
+    }
+
+    public void setTipoRequisito(TipoRequisito tipo) {
+        this.tipoRequisito = tipo;
+    }
+
+    public List<TipoRequisito> getTipos() {
+        return tipos;
+    }
+
+    public void setTipos(List<TipoRequisito> tipos) {
+        this.tipos = tipos;
     }
 
     public boolean isEditar() {
@@ -65,175 +277,4 @@ public class frmRequisito implements Serializable{
     public void setEditar(boolean editar) {
         this.editar = editar;
     }
-
-    public boolean isAgregar() {
-        return agregar;
-    }
-
-    public void setAgregar(boolean agregar) {
-        this.agregar = agregar;
-    }
-   
-    private LazyDataModel<Requisito> modeloRequisito;
-    private LazyDataModel<TipoRequisito>modeloTipoRequisito;
-
-    public LazyDataModel<TipoRequisito> getModeloTipoRequisito() {
-        return modeloTipoRequisito;
-    }
-
-    public void setModeloTipoRequisito(LazyDataModel<TipoRequisito> modeloTipoRequisito) {
-        this.modeloTipoRequisito = modeloTipoRequisito;
-    }
-    private Requisito requisito;
-    private boolean editar, agregar;
-    private TipoRequisito tipoR;
-
-    public TipoRequisito getTipoR() {
-        return tipoR;
-    }
-
-    public void setTipoR(TipoRequisito tipoR) {
-        this.tipoR = tipoR;
-    }
-
-    @PostConstruct
-    public void inicio(){
-        setModeloRequisito(new LazyDataModel<Requisito>() {
-           
-            @Override
-            public List<Requisito> load (int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-             List lista= new ArrayList();
-             if(requisitoFacade!=null){
-                 this.setRowCount(requisitoFacade.count());
-                 int[] rango= new int [2];
-                 rango[0]=first;
-                 rango[1]= pageSize;
-                 
-             }
-             return lista;
-            }
-            
-            @Override
-            public Object getRowKey (Requisito objeto){
-                return objeto.getIdRequisito();
-            }
-            
-            @Override 
-            public Requisito getRowData(String rowKey){
-            if(rowKey!=null&& !rowKey.trim().isEmpty() && this.getWrappedData()!=null){
-                List<Requisito> salida= (List<Requisito>) this.getWrappedData();
-                if(!salida.isEmpty()){
-                    for(Requisito get: salida){
-                        if(get.getIdRequisito().compareTo(Integer.parseInt(rowKey))==0){
-                        return get;
-                        }
-                    }
-                }
-            }
-            return null;
-            }
-                    });
-        
-        setModeloTipoRequisito(new LazyDataModel<TipoRequisito>() {
-           
-            @Override
-            public List<TipoRequisito> load (int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-             List lista= new ArrayList();
-             if(tipoRequisitoFacade!=null){
-                 this.setRowCount(tipoRequisitoFacade.count());
-                 int[] rango= new int [2];
-                 rango[0]=first;
-                 rango[1]= pageSize;
-                 
-             }
-             return lista;
-            }
-            
-            @Override
-            public Object getRowKey (TipoRequisito objeto){
-                return objeto.getIdTipoRequisito();
-            }
-            
-            @Override 
-            public TipoRequisito getRowData(String rowKey){
-            if(rowKey!=null&& !rowKey.trim().isEmpty() && this.getWrappedData()!=null){
-                List<TipoRequisito> salida= (List<TipoRequisito>) this.getWrappedData();
-                if(!salida.isEmpty()){
-                    for(TipoRequisito get: salida){
-                        if(get.getIdTipoRequisito().compareTo(Integer.parseInt(rowKey))==0){
-                        return get;
-                        }
-                    }
-                }
-            }
-            return null;
-            }
-                    });
-        
-    }
-    
-    public void Limpiar(){
-    RequestContext.getCurrentInstance().reset("vistaRequisito");
-    }
-    
-    public void btnNuevo(ActionEvent ae){
-    editar= false;
-        try {
-            Limpiar();
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-        }
-    }
-    
-    public void btnGuardar(ActionEvent ae){
-        try {
-            if(this.requisito != null && this.requisitoFacade != null){
-                
-                boolean resultado = this.requisitoFacade.create(requisito);
-                
-                FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Creado con exito":"Error", null);
-                this.agregar = !resultado;
-                FacesContext.getCurrentInstance().addMessage(null, msj);
-                Limpiar();
-            }
-        } catch (Exception e) {
-        }
- 
-    }
-    
-    public void btnModificar(ActionEvent ae){
-    try{
-            boolean resultado = this.requisitoFacade.editar(requisito); 
-            FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Modificado con exito":"Error", null);
-            this.editar = resultado;
-            FacesContext.getCurrentInstance().addMessage(null, msj);
-            Limpiar();
-        }catch(Exception e){
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-        }
-    }
-    
-     public void btnEliminarAction(ActionEvent ae) {
-        try {
-            if(this.requisito != null && this.requisitoFacade!= null){
-                boolean resultado = this.requisitoFacade.remove(requisito);
-                editar=!resultado;
-                FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Eliminado con exito":"Error", null);
-                FacesContext.getCurrentInstance().addMessage(null, msj);
-                Limpiar();
-                
-            }
-        } catch (Exception e) {
-        Logger.getLogger(getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-        }
-    }
-     
-      public void cambioTabla(){
-        this.editar = true;
-    }
-  
-    
-    public frmRequisito() {
-    }
-    
 }

@@ -14,7 +14,8 @@
                     <p:dataTable value="#{frmSolicitud.modeloSolicitud}"
                                  var="s"
                                  rows="10"
-                                 paginator="true"
+                                 scrollable="true"
+                                 scrollHeight="150"
                                  lazy="true"
                                  selectionMode="single"
                                  selection="#{frmSolicitud.solicitud}"
@@ -36,7 +37,7 @@
             </h:panelGrid>
         </p:panel>
         
-        <div align="center">
+        <div align="left">
             <p:panel id="panelMenu">
                 
                     <h:form id="vistaSolicitud">
@@ -45,7 +46,7 @@
                 <p:outputLabel value="ID" for="txtIdSolicitud" id="lblIdSolicitud"/>
                 <p:inputText id="txtIdSolicitud"  value="#{frmSolicitud.solicitud.idSolicitud}" readonly="true"></p:inputText>
                 <p:outputLabel value="Fecha" for="txtFecha" id="lblFecha"></p:outputLabel>
-                <p:inputMask mask="99/99/9999" id="txtFecha" required="true" value="#{frmSolicitud.registro.fecha}"></p:inputMask>
+                <p:inputMask mask="99/99/9999" id="txtFecha" required="true" value="#{frmSolicitud.solicitud.fecha}"></p:inputMask>
                 <p:outputLabel value="Solicitante" for="txtSolicitante" id="lblSolicitante"></p:outputLabel>
                 <p:inputText id="txtSolicitante"  value="#{frmSolicitud.solicitud.solicitante}" required="true"></p:inputText>
                 <p:commandButton value="Nuevo" actionListener="#{frmSolicitud.btnNuevo}" update=":vistaSolicitud">    

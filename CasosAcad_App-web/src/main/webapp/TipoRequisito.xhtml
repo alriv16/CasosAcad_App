@@ -15,11 +15,12 @@
                     <p:dataTable value="#{frmTipoRequisito.modeloTipo}"
                                  var="tipo"
                                  rows="10"
-                                 paginator="true"
+                                 scrollable="true"
+                                 scrollHeight="150"
                                  lazy="true"
                                  selectionMode="single"
                                  selection="#{frmTipoRequisito.tipoR}"
-                                 
+                                 style="text-align: center"
                                  widgetVar="dtTipoRequisito"
                                  >
                         <p:column headerText="ID">
@@ -34,7 +35,7 @@
                         <p:column headerText="Observacion">
                             <p:outputLabel value="#{tipo.observacion}"></p:outputLabel>
                         </p:column>
-                        <p:ajax update=":vistaRequisito" event="rowSelect" listener="${frmTipoRequisito.cambioTabla}"></p:ajax>
+                            
                     </p:dataTable>    
                     <p:growl id="growl" life="2000" />
                     

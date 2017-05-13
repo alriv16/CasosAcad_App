@@ -177,6 +177,7 @@ public class frmSolicitud implements Serializable{
     }
 
     public frmSolicitud() {
+        this.solicitud= new Solicitud();
     }
     
     

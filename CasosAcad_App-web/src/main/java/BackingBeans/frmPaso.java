@@ -45,6 +45,7 @@ public class frmPaso implements Serializable{
     private boolean editar, agregar;
     private TipoPaso tipoP;
     private List<TipoPaso> tipos;
+    
 
     public List<TipoPaso> getTipos() {
         return tipos;
@@ -107,6 +108,8 @@ public class frmPaso implements Serializable{
     
      @PostConstruct
     public void inicio(){
+        
+        this.tipos= tipoPasoFacade.findAll();
         setModeloPaso(new LazyDataModel<Paso>() {
            
             @Override

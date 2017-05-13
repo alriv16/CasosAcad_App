@@ -14,10 +14,12 @@
                     <p:dataTable value="#{frmTipoPaso.modeloTipo}"
                                  var="p"
                                  rows="10"
-                                 paginator="true"
+                                 scrollable="true"
+                                 scrollHeight="150"
                                  lazy="true"
                                  selectionMode="single"
                                  selection="#{frmTipoPaso.tipoP}"
+                                 style="text-align: center"
                                  >
                         <p:column headerText="ID">
                             <p:outputLabel value="#{p.idTipoPaso}"></p:outputLabel>

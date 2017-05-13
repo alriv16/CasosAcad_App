@@ -73,6 +73,7 @@ public class frmTipoRequisito implements Serializable{
     }
     
     public frmTipoRequisito() {
+        this.tipoR= new TipoRequisito();
     }
     
     @PostConstruct

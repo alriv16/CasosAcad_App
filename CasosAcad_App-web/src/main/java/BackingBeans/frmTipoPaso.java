@@ -174,6 +174,7 @@ public class frmTipoPaso implements Serializable {
   
     
     public frmTipoPaso() {
+        this.tipoP= new TipoPaso();
     }
     
 }

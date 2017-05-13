@@ -8,17 +8,18 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-       <p:panel header="Pasos para Gestiones Académicas" closable="false" toggleable="false" >
+       <p:panel header="Pasos para Gestiones Académicas" closable="false" toggleable="false">
             <h:panelGrid>
-                <h:form id="tablaPaso">
+                <h:form id="tablaPaso" >
                     <p:dataTable value="#{frmPaso.modeloPaso}"
                                  var="p"
                                  rows="10"
-                                 paginator="true"
+                                 scrollable="true"
+                                 scrollHeight="150"
                                  lazy="true"
                                  selectionMode="single"
                                  selection="#{frmPaso.paso}"
-                                 style="color: #ff5252"
+                                 style="color: #ff5252; text-align: center"
                                  >
                         <p:column headerText="ID">
                             <p:outputLabel value="#{p.idPaso}"></p:outputLabel>
@@ -75,8 +76,11 @@
                     <p:dataTable value="#{frmTipoPaso.modeloTipo}"
                                  var="p"
                                  rows="5"
-                                 paginator="true"
-                                 lazy="true"                               
+                                 scrollable="true"
+                                 scrollHeight="150"
+                                 lazy="true" 
+                                 style="text-align: center"
+                                 
                                  >
                         <p:column headerText="ID">
                             <p:outputLabel value="#{p.idTipoPaso}"></p:outputLabel>
