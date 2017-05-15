@@ -170,7 +170,6 @@ public class frmRequisito implements Serializable {
         try{
             boolean resultado = this.requisitoFacade.editar(requisito); 
             FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Modificado con exito":"Error", null);
-            //this.editar = resultado;
             FacesContext.getCurrentInstance().addMessage(null, msj);
             limpiar();
         }catch(Exception e){

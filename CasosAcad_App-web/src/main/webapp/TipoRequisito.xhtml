@@ -35,7 +35,7 @@
                         <p:column headerText="Observacion">
                             <p:outputLabel value="#{tipo.observacion}"></p:outputLabel>
                         </p:column>
-                            
+                        <p:ajax update=":vistaRequisito" event="rowSelect" listener="${frmTipoRequisito.cambioTabla}" ></p:ajax>   
                     </p:dataTable>    
                     <p:growl id="growl" life="2000" />
                     

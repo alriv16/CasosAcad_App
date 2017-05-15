@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+                           <h:form id="frm-pasorequisito">
+                        <h1 class="titulo"><h:outputText value="Paso Requisito"/></h1>
+                        <p:dataTable value="#{frmPasoRequisito.modeloPasoRequisito}" id="tb-pasorequisito" class="tableclass"
+                                     var="pr" 
+                                     lazy="true"
+                                     paginator="true"
+                                     rows="5"
+                                     rowsPerPageTemplate="5,10,15"
+                                     paginatorPosition="bottom"
+                                     selectionMode="single"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     style="text-align: center"
+                                     >
+                         <p:column headerText="Id Paso Requisito">
+                             <p:outputLabel value="#{pr.idPasoRequisito}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Paso">
+                            <p:outputLabel value="#{pr.idPaso.paso}"></p:outputLabel>
+                        </p:column>
+                            
+                        </p:dataTable>
+                    </h:form>
+           
+    </h:body>
+</html>
+
