@@ -8,7 +8,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <p:panel header="Requisitos para Casos Academicos" closable="false" toggleable="false" >
+        <p:panel header="Requisitos para Casos Academicos" closable="false" toggleable="true" >
             <h:panelGrid>
                 <h:form id="tablaRequisito">
                     <p:dataTable value="#{frmRequisito.modeloRequisito}"
@@ -19,7 +19,7 @@
                                  lazy="true"
                                  selectionMode="single"
                                  selection="#{frmRequisito.requisito}"
-                                 style="color: #ff5252; text-align: center"
+                                 style="text-align: center"
                                  >
                         <p:column headerText="ID">
                             <p:outputLabel value="#{r.idRequisito}"></p:outputLabel>
@@ -50,7 +50,7 @@
         </p:panel>
 
         <div>
-            <p:tabView id="tabViewRequisito">
+            <p:accordionPanel id="tabViewRequisito">
                 <p:tab title="Formulario Requisito" id="tabRequisito">
                     <h:form id="vistaRequisito">
                         <p:panelGrid columns="2">
@@ -143,7 +143,7 @@
                         </h:form>
                     </h:panelGrid>
                 </p:tab>
-            </p:tabView>    
+            </p:ccordionPanel>>    
         </div>
 
     </h:body>

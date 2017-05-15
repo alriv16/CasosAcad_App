@@ -8,7 +8,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-       <p:panel header="Pasos para Gestiones Académicas" closable="false" toggleable="false">
+        <p:panel header="Pasos para Gestiones Académicas" closable="false" toggleable="true">
             <h:panelGrid>
                 <h:form id="tablaPaso">
                     <p:dataTable value="#{frmPaso.modeloPaso}"
@@ -18,8 +18,8 @@
                                  scrollHeight="150"
                                  lazy="true"
                                  selectionMode="single"
-                                     selection="#{frmPaso.paso}"
-                                 style="color: #ff5252; text-align: center"
+                                 selection="#{frmPaso.paso}"
+                                 style=" text-align: center"
                                  >
                         <p:column headerText="ID">
                             <p:outputLabel value="#{p.idPaso}"></p:outputLabel>
@@ -35,10 +35,10 @@
         </p:panel>
 
         <div>
-            <p:tabView id="tabViewPaso">
+            <p:accordionPanel id="tabViewPaso">
                 <p:tab title="Formulario Paso" id="tabPaso">
                     <h:form id="vistaPaso">
-                        <p:panelGrid columns="2">
+                        <h:panelGrid columns="2" >
                             <p:outputLabel value="ID Paso" 
                                            for="txtIdPaso" 
                                            id="lblIdPaso"></p:outputLabel>
@@ -75,7 +75,7 @@
                             <p:commandButton value="Eliminar" actionListener="#{frmPaso.btnEliminar}" update=":tablaPaso :tabViewPaso:vistaPaso">
                                 <p:confirm header="Confirmación" message="¿Está seguro que desea eliminar este elemento?" icon="ui-icon-alert" />
                             </p:commandButton>          
-                        </p:panelGrid> 
+                        </h:panelGrid> 
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                             <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                             <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
@@ -84,7 +84,7 @@
                     </h:form>
                 </p:tab>
                 <p:tab title="Tabla Tipo Paso" id="tabTipoPaso">
-                    <h:panelGrid>
+                    <h:panelGrid >
                         <h:form id="tablaTipoPaso">
                             <p:dataTable value="#{frmTipoPaso.modeloTipo}"
                                          var="tipo"
@@ -102,14 +102,41 @@
                                 </p:column>                      
                             </p:dataTable>                        
                         </h:form>
-              
-            </h:panelGrid>                                
-            </p:tab>
-            <p:tab title="Requisitos Para Paso" id="idPasoRequisito">
-                
-            </p:tab>
-       </p:tabView>                        
+
+                    </h:panelGrid>                                
+                </p:tab>
+                <p:tab title="Requisitos Para Pasos" id="tabPasoRequisito">
+                    <h:form id="frm-pasorequisito">
+                        <h:panelGrid columns="2" >
+            <p:dataTable value="#{frmPasoRequisito.modeloPasoRequisito}" id="tbPasorequisito" class="tableclass"
+                         var="pr" 
+                         lazy="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,15"    
+                         selectionMode="single" 
+                         sortBy="#{pr.idPaso.paso}"
+                         expandableRowGroups="true"
+                         >
+                <p:headerRow>
+                    <p:column colspan="2" >
+                        <h:outputText value="#{pr.idPaso.paso}" />
+                    </p:column>
+                </p:headerRow>
+                <p:column headerText="Id Paso Requisito" style="text-align: center">
+                    <p:outputLabel value="#{pr.idPasoRequisito}"></p:outputLabel>
+                </p:column>
+
+                <p:column headerText="Requisito" style="text-align: center">
+                    <p:outputLabel value="#{pr.idRequisito.requisito}"></p:outputLabel>
+                </p:column>
+            </p:dataTable>
+                 
+                        </h:panelGrid>
+        </h:form>
+
+                </p:tab>
+            </p:accordionPanel>                        
         </div>
-  
+
     </h:body>
 </html>

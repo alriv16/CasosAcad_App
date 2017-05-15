@@ -45,9 +45,9 @@ public class frmPasoRequisito implements Serializable{
     private LazyDataModel<PasoRequisito> modeloPasoRequisito;
     private LazyDataModel<Paso> modeloPaso;
     private LazyDataModel<Requisito> modeloRequisito;
-    private PasoRequisito registroPasoRequisito;
-    private Paso registroPaso;
-    private Requisito registroRequisito;
+    private PasoRequisito pasoRequisito;
+    private Paso paso;
+    private Requisito requisito;
     private List<Paso> listaPasos;
     private List<Requisito> listaRequisito;
     private boolean editar=false;
@@ -196,9 +196,9 @@ public class frmPasoRequisito implements Serializable{
     }
     
     public Integer getPasoSeleccionado(){
-     if(registroPasoRequisito!= null){
-            if(registroPasoRequisito.getIdPaso()!= null){
-                return this.registroPasoRequisito.getIdPaso().getIdPaso();
+     if(pasoRequisito!= null){
+            if(pasoRequisito.getIdPaso()!= null){
+               return this.pasoRequisito.getIdPaso().getIdPaso();
             } else {
                 return null;
             }         
@@ -211,10 +211,10 @@ public class frmPasoRequisito implements Serializable{
         if(idPaso >= 0 && !this.listaPasos.isEmpty()){
             for(Paso pe : this.getListaPasos()) {
                 if(Objects.equals(pe.getIdPaso(), idPaso)) {
-                    if(this.registroPasoRequisito.getIdPaso() != null) {
-                        this.registroPasoRequisito.getIdPaso().setIdPaso(idPaso);
+                    if(this.pasoRequisito.getIdPaso() != null) {
+                        this.pasoRequisito.getIdPaso().setIdPaso(idPaso);
                     } else {
-                        this.registroPasoRequisito.setIdPaso(pe);
+                        this.pasoRequisito.setIdPaso(pe);
                     }
                 }
             }
@@ -223,9 +223,9 @@ public class frmPasoRequisito implements Serializable{
     }
     
     public Integer getRequisitoSeleccionado(){
-     if(registroPasoRequisito!= null){
-            if(registroPasoRequisito.getIdRequisito()!= null){
-                return this.registroPasoRequisito.getIdRequisito().getIdRequisito();
+     if(pasoRequisito!= null){
+            if(pasoRequisito.getIdRequisito()!= null){
+                return this.pasoRequisito.getIdRequisito().getIdRequisito();
             } else {
                 return null;
             }         
@@ -238,10 +238,10 @@ public class frmPasoRequisito implements Serializable{
         if(idRequisito >= 0 && !this.listaRequisito.isEmpty()){
             for(Requisito re : this.getListaRequisito()) {
                 if(Objects.equals(re.getIdRequisito(), idRequisito)) {
-                    if(this.registroPasoRequisito.getIdRequisito() != null) {
-                        this.registroPasoRequisito.getIdRequisito().setIdRequisito(idRequisito);
+                    if(this.pasoRequisito.getIdRequisito() != null) {
+                        this.pasoRequisito.getIdRequisito().setIdRequisito(idRequisito);
                     } else {
-                        this.registroPasoRequisito.setIdRequisito(re);
+                        this.pasoRequisito.setIdRequisito(re);
                     }
                 }
             }
@@ -252,7 +252,7 @@ public class frmPasoRequisito implements Serializable{
     public void limpiar(){
       
         RequestContext.getCurrentInstance().reset("");
-        this.registroPasoRequisito= new PasoRequisito();
+        this.pasoRequisito= new PasoRequisito();
     }
     
     
@@ -279,8 +279,8 @@ public class frmPasoRequisito implements Serializable{
     public void btnGuardarAction(ActionEvent ae){
            
     try{
-       if(this.registroPasoRequisito != null && this.prfl != null){
-                boolean resultado = this.prfl.create(registroPasoRequisito);
+       if(this.pasoRequisito != null && this.prfl != null){
+                boolean resultado = this.prfl.create(pasoRequisito);
                 FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Creado con exito":"Error", null);
                 //this.agregar = !resultado;
                 FacesContext.getCurrentInstance().addMessage(null, msj);}
@@ -297,7 +297,7 @@ public class frmPasoRequisito implements Serializable{
     
         public void btnModificarAction(ActionEvent ae){
         try{
-            boolean resultado = this.prfl.editar(registroPasoRequisito); 
+            boolean resultado = this.prfl.editar(pasoRequisito); 
             FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Modificado con exito":"Error", null);
             //this.editar = resultado;
             FacesContext.getCurrentInstance().addMessage(null, msj);
@@ -309,8 +309,8 @@ public class frmPasoRequisito implements Serializable{
 
             public void btnEliminarAction(ActionEvent ae) {
         try {
-            if(this.registroPasoRequisito != null && this.prfl != null){
-                boolean resultado = this.prfl.remove(registroPasoRequisito);
+            if(this.pasoRequisito != null && this.prfl != null){
+                boolean resultado = this.prfl.remove(pasoRequisito);
                 //editar=!resultado;
                 FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Eliminado con exito":"Error", null);
                 FacesContext.getCurrentInstance().addMessage(null, msj);
@@ -322,26 +322,9 @@ public class frmPasoRequisito implements Serializable{
         }
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /**
-     * Creates a new instance of FrmPasoRequisito
-     */
     public frmPasoRequisito() {
     
-    this.registroPasoRequisito=new PasoRequisito();
+    this.pasoRequisito=new PasoRequisito();
     
     }
 
@@ -369,28 +352,28 @@ public class frmPasoRequisito implements Serializable{
         this.modeloRequisito = modeloRequisito;
     }
 
-    public PasoRequisito getRegistroPasoRequisito() {
-        return registroPasoRequisito;
+    public PasoRequisito getPasoRequisito() {
+        return pasoRequisito;
     }
 
-    public void setRegistroPasoRequisito(PasoRequisito registroPasoRequisito) {
-        this.registroPasoRequisito = registroPasoRequisito;
+    public void setPasoRequisito(PasoRequisito registroPasoRequisito) {
+        this.pasoRequisito = registroPasoRequisito;
     }
 
-    public Paso getRegistroPaso() {
-        return registroPaso;
+    public Paso getPaso() {
+        return paso;
     }
 
-    public void setRegistroPaso(Paso registroPaso) {
-        this.registroPaso = registroPaso;
+    public void setPaso(Paso registroPaso) {
+        this.paso = registroPaso;
     }
 
-    public Requisito getRegistroRequisito() {
-        return registroRequisito;
+    public Requisito getRequisito() {
+        return requisito;
     }
 
-    public void setRegistroRequisito(Requisito registroRequisito) {
-        this.registroRequisito = registroRequisito;
+    public void setRequisito(Requisito registroRequisito) {
+        this.requisito = registroRequisito;
     }
 
     /**

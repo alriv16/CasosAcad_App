@@ -22,4 +22,8 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
+  <persistence-unit name="primefacesCasosAcad_CasosAcad_App-ejb_ejb_1.0-SNAPSHOTPU3" transaction-type="JTA">
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties/>
+  </persistence-unit>
 </persistence>

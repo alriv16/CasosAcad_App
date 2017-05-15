@@ -8,29 +8,41 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-                           <h:form id="frm-pasorequisito">
-                        <h1 class="titulo"><h:outputText value="Paso Requisito"/></h1>
-                        <p:dataTable value="#{frmPasoRequisito.modeloPasoRequisito}" id="tb-pasorequisito" class="tableclass"
-                                     var="pr" 
-                                     lazy="true"
-                                     paginator="true"
-                                     rows="5"
-                                     rowsPerPageTemplate="5,10,15"
-                                     paginatorPosition="bottom"
-                                     selectionMode="single"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     style="text-align: center"
-                                     >
-                         <p:column headerText="Id Paso Requisito">
-                             <p:outputLabel value="#{pr.idPasoRequisito}"></p:outputLabel>
-                        </p:column>
-                        <p:column headerText="Paso">
-                            <p:outputLabel value="#{pr.idPaso.paso}"></p:outputLabel>
-                        </p:column>
-                            
-                        </p:dataTable>
-                    </h:form>
-           
+        <h:form id="frm-pasorequisito">
+            <p:panel header="Requisitos de Pasos Para Gestión Académica" toggleable="true">
+ 
+            <p:dataTable value="#{frmPasoRequisito.modeloPasoRequisito}" id="tb-pasorequisito" class="tableclass"
+                         var="pr" 
+                         lazy="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,15"
+                         paginatorPosition="bottom"
+                         selectionMode="single"
+                         sortBy="#{pr.idPaso.paso}"
+                         expandableRowGroups="true"
+                         
+                         >
+                <p:headerRow>
+                    <p:column colspan="2" >
+                        <h:outputText value="#{pr.idPaso.paso}" />
+                    </p:column>
+                </p:headerRow>
+                <p:column headerText="Id Paso Requisito" style="text-align: center">
+                    <p:outputLabel value="#{pr.idPasoRequisito}"></p:outputLabel>
+                </p:column>
+
+                <p:column headerText="Requisito" style="text-align: center">
+                    <p:outputLabel value="#{pr.idRequisito.requisito}"></p:outputLabel>
+                </p:column>
+                 
+            </p:dataTable>
+            </p:panel>
+        </h:form>
+        
+        <h:form title="Formulario Paso Requisito" id="frmPasoRequisito">
+            
+        </h:form>
+
     </h:body>
 </html>
 

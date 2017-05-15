@@ -8,7 +8,7 @@
         <title>Formulario mantenimiento solicitud</title>
     </h:head>
     <h:body>
-         <p:panel header="Solicitud Gestiones Académicas" closable="false" toggleable="false" >
+         <p:panel header="Solicitud Gestiones Académicas" closable="false" toggleable="true" >
             <h:panelGrid>
                 <h:form id="tablaSolicitud">
                     <p:dataTable value="#{frmSolicitud.modeloSolicitud}"
@@ -19,6 +19,7 @@
                                  lazy="true"
                                  selectionMode="single"
                                  selection="#{frmSolicitud.solicitud}"
+                                  style="text-align: center"
                                  >
                         <p:column headerText="ID">
                             <p:outputLabel value="#{s.idSolicitud}"></p:outputLabel>
