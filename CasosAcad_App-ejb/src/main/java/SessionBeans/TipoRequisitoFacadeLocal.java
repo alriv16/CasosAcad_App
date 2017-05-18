@@ -27,6 +27,8 @@ public interface TipoRequisitoFacadeLocal {
     List<TipoRequisito> findAll();
 
     List<TipoRequisito> findRange(int[] range);
+    
+    List<TipoRequisito> findByEstado(boolean estado);
 
     int count();
     

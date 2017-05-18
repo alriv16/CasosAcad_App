@@ -28,6 +28,8 @@ public interface PasoRequisitoFacadeLocal {
 
     List<PasoRequisito> findRange(int[] range);
 
+    List<PasoRequisito> findByIdPaso(Object id);
+    
     int count();
     
 }
