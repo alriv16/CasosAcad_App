@@ -258,7 +258,7 @@ public class frmPasoRequisito implements Serializable{
     
     
     
-    public void btnNuevoAction(ActionEvent ae){
+    public void btnNuevo(ActionEvent ae){
     
     try{
     
@@ -276,7 +276,7 @@ public class frmPasoRequisito implements Serializable{
     
     
     
-    public void btnGuardarAction(ActionEvent ae){
+    public void btnGuardar(ActionEvent ae){
            
     try{
        if(this.pasoRequisito != null && this.prfl != null){
@@ -295,7 +295,7 @@ public class frmPasoRequisito implements Serializable{
     }   
     
     
-        public void btnModificarAction(ActionEvent ae){
+        public void btnModificar(ActionEvent ae){
         try{
             boolean resultado = this.prfl.editar(pasoRequisito); 
             FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Modificado con exito":"Error", null);
@@ -307,7 +307,7 @@ public class frmPasoRequisito implements Serializable{
         }
     }
 
-            public void btnEliminarAction(ActionEvent ae) {
+            public void btnEliminar(ActionEvent ae) {
         try {
             if(this.pasoRequisito != null && this.prfl != null){
                 boolean resultado = this.prfl.remove(pasoRequisito);
@@ -389,4 +389,7 @@ public class frmPasoRequisito implements Serializable{
     public void setEditar(boolean editar) {
         this.editar = editar;
     } 
+    public void cambioTabla(){
+        this.editar = true;
+    }
 }

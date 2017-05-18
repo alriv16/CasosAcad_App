@@ -29,5 +29,6 @@ public interface PasoRequisitoFacadeLocal {
     List<PasoRequisito> findRange(int[] range);
 
     int count();
+
     
 }

@@ -62,8 +62,8 @@
                 
                 <p:commandButton value="Nuevo" actionListener="#{frmProceso.btnNuevo}" update=":vistaProceso">
                 </p:commandButton>
-                <p:commandButton value="Modificar" actionListener="#{frmProceso.btnModificar}" update=":tablaProcesos :vistaProceso" rendered="${frmTipoRequisito.editar}" ></p:commandButton>                
-                <p:commandButton value="Guardar" actionListener="#{frmProceso.btnGuardar}" update=":tablaProcesos :vistaProceso" rendered="${!frmTipoRequisito.editar}"></p:commandButton> 
+                <p:commandButton value="Modificar" actionListener="#{frmProceso.btnModificar}" update=":tablaProcesos :vistaProceso" rendered="${frmProceso.editar}" ></p:commandButton>                
+                <p:commandButton value="Guardar" actionListener="#{frmProceso.btnGuardar}" update=":tablaProcesos :vistaProceso" rendered="${!frmProceso.editar}"></p:commandButton> 
                 <p:commandButton value="Eliminar" actionListener="#{frmProceso.btnEliminar}" update=":tablaProcesos :vistaProceso">
                     <p:confirm header="Confirmacion" message="¿Está seguro que desea eliminar este elemento?" icon="ui-icon-alert" />
                 </p:commandButton>

@@ -8,40 +8,85 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h:form id="frm-pasorequisito">
-            <p:panel header="Requisitos de Pasos Para Gestión Académica" toggleable="true">
- 
-            <p:dataTable value="#{frmPasoRequisito.modeloPasoRequisito}" id="tb-pasorequisito" class="tableclass"
-                         var="pr" 
-                         lazy="true"
-                         rows="5"
-                         rowsPerPageTemplate="5,10,15"
-                         paginatorPosition="bottom"
-                         selectionMode="single"
-                         sortBy="#{pr.idPaso.paso}"
-                         expandableRowGroups="true"
-                         
-                         >
-                <p:headerRow>
-                    <p:column colspan="2" >
-                        <h:outputText value="#{pr.idPaso.paso}" />
-                    </p:column>
-                </p:headerRow>
-                <p:column headerText="Id Paso Requisito" style="text-align: center">
-                    <p:outputLabel value="#{pr.idPasoRequisito}"></p:outputLabel>
-                </p:column>
+        <p:panel header="Requisitos de Pasos Para Gestión Académica" toggleable="true">
+            <h:form id="frmPR">
 
-                <p:column headerText="Requisito" style="text-align: center">
-                    <p:outputLabel value="#{pr.idRequisito.requisito}"></p:outputLabel>
-                </p:column>
-                 
-            </p:dataTable>
-            </p:panel>
-        </h:form>
-        
-        <h:form title="Formulario Paso Requisito" id="frmPasoRequisito">
-            
-        </h:form>
+
+                <p:dataTable value="#{frmPasoRequisito.modeloPasoRequisito}" id="tbPR" class="tableclass"
+                             var="pr" 
+                             lazy="true"
+                             rows="5"
+                             rowsPerPageTemplate="5,10,15"
+                             paginatorPosition="bottom"
+                             selectionMode="single"
+                             sortBy="#{pr.idPaso.paso}"
+                             expandableRowGroups="true"
+
+                             >
+                    <p:ajax update=":frmPasoRequisito" event="rowSelect" listener="${frmPasoRequisito.cambioTabla()}"/>
+                    <p:headerRow>
+                        <p:column colspan="2" >
+                            <h:outputText value="#{pr.idPaso.paso}" />
+                        </p:column>
+                    </p:headerRow>
+                    <p:column headerText="Id Paso Requisito" style="text-align: center">
+                        <p:outputLabel value="#{pr.idPasoRequisito}"></p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Requisito" style="text-align: center">
+                        <p:outputLabel value="#{pr.idRequisito.requisito}"></p:outputLabel>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+        </p:panel>
+        <p:panel>
+            <h:form id="frmPasoRequisito">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Id Paso Requisito" for="txtPR" id="lblPR"/> 
+                    <p:inputText id="txtPR"  value="#{frmPasoRequisito.pasoRequisito.idPasoRequisito}" readonly="true"></p:inputText>
+
+                    <p:outputLabel value="Paso" for="cbPaso" id="lblPaso"/>
+                    <h:selectOneListbox id="cbPaso" 
+                                        value="#{frmPasoRequisito.pasoSeleccionado}" 
+                                        style="width: 200px" 
+                                        required="true" 
+                                        styleClass="center_content" 
+                                        size="1" >
+                        <f:selectItem itemLabel="Seleccione Paso" 
+                                      itemValue="" />
+                        <f:selectItems value="#{frmPasoRequisito.listaPasos}" 
+                                       var="paso" 
+                                       itemLabel="#{paso.paso}" 
+                                       itemValue="#{paso.idPaso}">
+                        </f:selectItems>
+                    </h:selectOneListbox>
+                    <p:outputLabel value="Requisito" for="cbRequisito" id="lblRequisito"/>
+                    <h:selectOneListbox id="cbRequisito" 
+                                        value="#{frmPasoRequisito.requisitoSeleccionado}" 
+                                        style="width: 200px" 
+                                        required="true" 
+                                        styleClass="center_content" 
+                                        size="1" >
+                        <f:selectItem itemLabel="Seleccione Requisito" 
+                                      itemValue="" />
+                        <f:selectItems value="#{frmPasoRequisito.listaRequisito}" 
+                                       var="requisito" 
+                                       itemLabel="#{requisito.requisito}" 
+                                       itemValue="#{requisito.idRequisito}">
+                        </f:selectItems>
+                    </h:selectOneListbox>
+                    <p:commandButton value="Nuevo" actionListener="#{frmPasoRequisito.btnNuevo}" update=":frmPasoRequisito">
+                    </p:commandButton>
+                    <p:commandButton value="Modificar" actionListener="#{frmPasoRequisito.btnModificar}" update=":frmPR :frmPasoRequisito" rendered="${frmPasoRequisito.editar}" ></p:commandButton>                
+                    <p:commandButton value="Guardar" actionListener="#{frmPasoRequisito.btnGuardar}" update=":frmPR :frmPasoRequisito" rendered="${!frmPasoRequisito.editar}"></p:commandButton> 
+                    <p:commandButton value="Eliminar" actionListener="#{frmPasoRequisito.btnEliminar}" update=":frmPR :frmPasoRequisito">
+                        <p:confirm header="Confirmacion" message="¿Está seguro que desea eliminar este elemento?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
 
     </h:body>
 </html>
