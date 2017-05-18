@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="primefacesCasosAcad_CasosAcad_App-ejb_ejb_1.0-SNAPSHOTPU" transaction-type="JTA">
-    <jta-data-source>recursosCasosAcad</jta-data-source>
+    <jta-data-source>recursoCasosAcad</jta-data-source>
     <class>Entities.CasosAcad.Caso</class>
     <class>Entities.CasosAcad.CasoDetalle</class>
     <class>Entities.CasosAcad.CasoDetalleRequisito</class>
@@ -14,15 +14,6 @@
     <class>Entities.CasosAcad.Solicitud</class>
     <class>Entities.CasosAcad.TipoPaso</class>
     <class>Entities.CasosAcad.TipoRequisito</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
-  </persistence-unit>
-  <persistence-unit name="primefacesCasosAcad_CasosAcad_App-ejb_ejb_1.0-SNAPSHOTPU2" transaction-type="JTA">
-    <jta-data-source>recursoCasosAcadPF</jta-data-source>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
-  </persistence-unit>
-  <persistence-unit name="primefacesCasosAcad_CasosAcad_App-ejb_ejb_1.0-SNAPSHOTPU3" transaction-type="JTA">
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

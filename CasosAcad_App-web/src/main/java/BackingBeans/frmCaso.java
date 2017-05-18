@@ -8,6 +8,7 @@ package BackingBeans;
 import Entities.CasosAcad.Caso;
 import Entities.CasosAcad.Proceso;
 import Entities.CasosAcad.Solicitud;
+import Entities.CasosAcad.TipoPaso;
 import SessionBeans.CasoFacadeLocal;
 import SessionBeans.ProcesoFacadeLocal;
 import SessionBeans.SolicitudFacadeLocal;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -55,7 +57,8 @@ public class frmCaso implements Serializable {
     private LazyDataModel<Solicitud> modeloSolicitud;
     private Solicitud solicitud;
     private Proceso proceso;
-    private List lstSolicitud, lstProceso;
+    private List<Solicitud> tiposS;
+    private List<Proceso> tiposP;
 
     public boolean isEditar() {
         return editar;
@@ -120,13 +123,30 @@ public class frmCaso implements Serializable {
     public void setProceso(Proceso proceso) {
         this.proceso = proceso;
     }
+
+    public List<Solicitud> getTiposS() {
+        return tiposS;
+    }
+
+    public void setTiposS(List<Solicitud> tiposS) {
+        this.tiposS = tiposS;
+    }
+
+    public List<Proceso> getTiposP() {
+        return tiposP;
+    }
+
+    public void setTiposP(List<Proceso> tiposP) {
+        this.tiposP = tiposP;
+    }
+    
     
     @PostConstruct
     public void Inicio(){
         
         try{
-        this.lstProceso= procesoFacade.findAll();
-        this.lstSolicitud= solicitudFacade.findAll();
+        this.tiposP= procesoFacade.findAll();
+        this.tiposS= solicitudFacade.findAll();
         }catch(Exception ex){
         Logger.getLogger(getClass().getName()).log(Level.SEVERE,ex.getMessage(),ex);
         }
@@ -240,7 +260,8 @@ public class frmCaso implements Serializable {
     
     
     public void Limpiar(){
-    RequestContext.getCurrentInstance().reset("");
+    //RequestContext.getCurrentInstance().reset(":tabViewCaso:vistaCaso");
+    this.caso= new Caso();
     }
     
     public void btnNuevo(ActionEvent ae){
@@ -280,7 +301,7 @@ public class frmCaso implements Serializable {
         }
     }
     
-     public void btnEliminarAction(ActionEvent ae) {
+     public void btnEliminar(ActionEvent ae) {
         try {
             if(this.caso != null && this.casoFacade!= null){
                 boolean resultado = this.casoFacade.remove(caso);
@@ -302,4 +323,60 @@ public class frmCaso implements Serializable {
     public frmCaso() {
     }
     
+    //Id del Proceso
+    public Integer getTipoSeleccionadoP(){
+     if(caso!= null){
+            if(caso.getIdProceso()!= null){
+                return this.caso.getIdProceso().getIdProceso();
+            } else {
+                return null;
+            }         
+        } else {
+            return null;
+        }
+    }
+    
+    public void setTipoSeleccionadoP(Integer idProceso){
+        if(idProceso >= 0 && !this.tiposP.isEmpty()){
+            for(Proceso pro : this.getTiposP()) {
+                if(Objects.equals(pro.getIdProceso(), idProceso)) {
+                    if(this.caso.getIdProceso()!= null) {
+                        this.caso.getIdProceso().setIdProceso(idProceso);
+                    } else {
+                        this.caso.setIdProceso(pro);
+                    }
+                }
+            }
+        }
+    
+    }
+    
+    
+        //Id de la Solicitud
+    public Integer getTipoSeleccionadoS(){
+     if(caso!= null){
+            if(caso.getIdProceso()!= null){
+                return this.caso.getIdProceso().getIdProceso();
+            } else {
+                return null;
+            }         
+        } else {
+            return null;
+        }
+    }
+    
+    public void setTipoSeleccionadoS(Integer idSolicitud){
+        if(idSolicitud >= 0 && !this.tiposS.isEmpty()){
+            for(Solicitud sol : this.getTiposS()) {
+                if(Objects.equals(sol.getIdSolicitud(), idSolicitud)) {
+                    if(this.caso.getIdSolicitud()!= null) {
+                        this.caso.getIdSolicitud().setIdSolicitud(idSolicitud);
+                    } else {
+                        this.caso.setIdSolicitud(sol);
+                    }
+                }
+            }
+        }
+    
+    }
 }

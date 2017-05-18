@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:panel header="Casos" closable="false" toggleable="true">
+           <h:panelGrid>
+                <h:form id="tablaCaso">
+                    <p:dataTable value="#{frmCaso.modeloCaso}"
+                                 var="c"
+                                 rows="10"
+                                 scrollable="true"
+                                 scrollHeight="150"
+                                 lazy="true"
+                                 selectionMode="single"
+                                 selection="#{frmCaso.caso}"
+                                 style=" text-align: center"
+                                 >
+                        <p:column headerText="ID" style="text-align: center">
+                            <p:outputLabel value="#{c.idCaso}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Caso">
+                            <p:outputLabel value="#{c.nombre}"></p:outputLabel>
+                        </p:column>   
+                        <p:column headerText="Encargado">
+                            <p:outputLabel value="#{c.encargado}"></p:outputLabel>
+                        </p:column> 
+                        <p:column headerText="ID Solicitud">
+                            <p:outputLabel value="#{c.idSolicitud.idSolicitud}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="ID Proceso">
+                            <p:outputLabel value="#{c.idProceso.idProceso}"></p:outputLabel>
+                        </p:column>
+                        <p:ajax update=":tabViewCaso" event="rowSelect" listener="${frmCaso.cambioTabla}"></p:ajax> 
+                    </p:dataTable>    
+                    <p:growl id="growl" life="2000" />
+                </h:form>
+            </h:panelGrid> 
+        </p:panel>
+        
+        <div>
+            <p:accordionPanel id="tabViewCaso">
+                <p:tab title="Formulario Caso" id="tabCaso">
+                    <h:form id="vistaCaso">
+                        <h:panelGrid columns="2" >
+                            <p:outputLabel value="ID Caso:" 
+                                           for="txtIdCaso" 
+                                           id="lblIdCaso"></p:outputLabel>
+                            <p:inputText id="txtIdCaso" 
+                                         value="#{frmCaso.caso.idCaso}" 
+                                         readonly="true"></p:inputText>
+                            <p:outputLabel value="Caso:" 
+                                           for="txtCaso" 
+                                           id="lblCaso"></p:outputLabel>
+                            <p:inputText id="txtCaso" 
+                                         required="true"
+                                         value="#{frmCaso.caso.nombre}" 
+                                         ></p:inputText>
+                            <p:outputLabel value="Encargado:"
+                                           id="lblEncargado"
+                                           for="txtEncargado"></p:outputLabel>
+                            <p:inputText id="txtEncargado"
+                                         required="true"
+                                         value="#{frmCaso.caso.encargado}" 
+                                         ></p:inputText>
+                            
+                             <p:outputLabel value="Proceso:" 
+                                           for="cbIdProceso" 
+                                           id="lblProceso">
+
+                            </p:outputLabel>
+                            <h:selectOneListbox id="cbIdProceso" 
+                                                value="#{frmCaso.tipoSeleccionadoP}" 
+                                                style="width: 200px" 
+                                                required="true" 
+                                                styleClass="center_content" 
+                                                size="1" >
+                                <f:selectItem itemLabel="Seleccione proceso" 
+                                              itemValue="" />
+                                <f:selectItems value="#{frmCaso.tiposP}" 
+                                               var="tipo" 
+                                               itemLabel="#{tipo.nombre}" 
+                                               itemValue="#{tipo.idProceso}">
+                                </f:selectItems>
+                            </h:selectOneListbox>
+                            
+                            <p:outputLabel value="Solicitud:" 
+                                           for="cbIdSolicitud" 
+                                           id="lblSolicitud">
+
+                            </p:outputLabel>
+                            <h:selectOneListbox id="cbIdSolicitud" 
+                                                value="#{frmCaso.tipoSeleccionadoS}" 
+                                                style="width: 200px" 
+                                                required="true" 
+                                                styleClass="center_content" 
+                                                size="1" >
+                                <f:selectItem itemLabel="Seleccione solicitud" 
+                                              itemValue="" />
+                                <f:selectItems value="#{frmCaso.tiposS}" 
+                                               var="tipo" 
+                                               itemLabel="#{tipo.solicitante}" 
+                                               itemValue="#{tipo.idSolicitud}">
+                                </f:selectItems>
+                            </h:selectOneListbox>
+                            
+                            <p:commandButton value="Nuevo" actionListener="#{frmCaso.btnNuevo}" update=":tabViewCaso:vistaCaso">    
+                            </p:commandButton>
+                            <p:commandButton value="Modificar" actionListener="#{frmCaso.btnModificar}" update=":tablaCaso :tabViewCaso:vistaCaso" rendered="${frmCaso.editar}"></p:commandButton>                
+                            <p:commandButton value="Guardar" actionListener="#{frmCaso.btnGuardar}" update=":tablaCaso :tabViewCaso:vistaCaso" rendered="${!frmCaso.editar}"></p:commandButton> 
+                            <p:commandButton value="Eliminar" actionListener="#{frmCaso.btnEliminar}" update=":tablaCaso :tabViewCaso:vistaCaso">
+                                <p:confirm header="Confirmación" message="¿Está seguro que desea eliminar este elemento?" icon="ui-icon-alert" />
+                            </p:commandButton>          
+                        </h:panelGrid> 
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                        
+                    </h:form>
+                </p:tab>
+                
+                <p:tab title="Tabla Proceso" id="tabProceso">
+                      <h:panelGrid>
+                <h:form id="tablaProceso">
+                    <p:dataTable value="#{frmProceso.modeloProceso}"
+                                 var="pro"
+                                 rows="5"
+                                 paginator="true"
+                                 lazy="true"
+                                 >
+                        <p:column headerText="ID">
+                            <p:outputLabel value="#{pro.idProceso}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <p:outputLabel value="#{pro.nombre}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Responsable">
+                            <p:outputLabel value="#{pro.activo?'Activo':'Inactivo'}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Descripcion">
+                            <p:outputLabel value="#{pro.descripcion}"></p:outputLabel>
+                        </p:column>                        
+                    </p:dataTable>                        
+                </h:form>
+            </h:panelGrid>
+                </p:tab>
+                                <p:tab title="Tabla Solicitud" id="tabSolicitud">
+                      <h:panelGrid>
+                <h:form id="tablaSolicitud">
+                    <p:dataTable value="#{frmSolicitud.modeloSolicitud}"
+                                 var="soli"
+                                 rows="5"
+                                 paginator="true"
+                                 lazy="true"
+                                 >
+                        <p:column headerText="ID">
+                            <p:outputLabel value="#{soli.idSolicitud}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Fecha">
+                            <p:outputLabel value="#{soli.fecha}"></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Solicitante">
+                            <p:outputLabel value="#{soli.solicitante}"></p:outputLabel>
+                        </p:column>                        
+                    </p:dataTable>                        
+                </h:form>
+            </h:panelGrid>
+                </p:tab> 
+            </p:accordionPanel>
+
+        </div>
+        
+    </h:body>
+</html>
+

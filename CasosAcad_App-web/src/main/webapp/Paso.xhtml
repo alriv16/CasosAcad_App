@@ -25,9 +25,13 @@
                         <p:column headerText="ID" style="text-align: center">
                             <p:outputLabel value="#{p.idPaso}"></p:outputLabel>
                         </p:column>
+                        <p:column headerText="Paso">
+                            <p:outputLabel value="#{p.paso}"></p:outputLabel>
+                        </p:column>
                         <p:column headerText="Tipo Paso">
                             <p:outputLabel value="#{p.idTipoPaso.paso}"></p:outputLabel>
-                        </p:column>              
+                        </p:column>  
+                        
                         <p:ajax update=":tabViewPaso" event="rowSelect" listener="${frmPaso.cambioTabla}"></p:ajax> 
                     </p:dataTable>    
                     <p:growl id="growl" life="2000" />
