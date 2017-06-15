@@ -44,11 +44,9 @@ public class frmCaso implements Serializable {
 
     @EJB
     private CasoFacadeLocal casoFacade;
-    
-    
-    
 
-    private boolean editar, agregar;
+    private boolean editar;
+    private boolean agregar;
     private Caso caso;
     private LazyDataModel<Caso> modeloCaso;
     private LazyDataModel<Proceso> modeloProceso;
@@ -120,186 +118,185 @@ public class frmCaso implements Serializable {
     public void setProceso(Proceso proceso) {
         this.proceso = proceso;
     }
-    
+
     @PostConstruct
-    public void Inicio(){
-        
-        try{
-        this.lstProceso= procesoFacade.findAll();
-        this.lstSolicitud= solicitudFacade.findAll();
-        }catch(Exception ex){
-        Logger.getLogger(getClass().getName()).log(Level.SEVERE,ex.getMessage(),ex);
+    public void Inicio() {
+
+        try {
+            this.lstProceso = procesoFacade.findAll();
+            this.lstSolicitud = solicitudFacade.findAll();
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
-        
+
         setModeloCaso(new LazyDataModel<Caso>() {
             @Override
-            public List<Caso> load(int first, int pageSize,String sortField, SortOrder sortOrder, Map<String, Object> filters){
-            List lista=new ArrayList();
-            if(casoFacade!=null){
-            this.setRowCount(casoFacade.count());
-            int[]rango = new int [2];
-            rango[0]= first;
-            rango[1]= pageSize;
-            lista= casoFacade.findRange(rango);
+            public List<Caso> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                List lista = new ArrayList();
+                if (casoFacade != null) {
+                    this.setRowCount(casoFacade.count());
+                    int[] rango = new int[2];
+                    rango[0] = first;
+                    rango[1] = pageSize;
+                    lista = casoFacade.findRange(rango);
+                }
+                return lista;
             }
-            return lista;
-            }
-            
+
             @Override
-            public Object getRowKey(Caso objeto){
-               return objeto.getIdCaso();
+            public Object getRowKey(Caso objeto) {
+                return objeto.getIdCaso();
             }
-      
-            @Override 
-            public Caso getRowData(String rowKey){
-            if(rowKey!=null&& !rowKey.trim().isEmpty() && this.getWrappedData()!=null){
-                List<Caso> salida= (List<Caso>) this.getWrappedData();
-                if(!salida.isEmpty()){
-                    for(Caso get: salida){
-                        if(get.getIdCaso().compareTo(Integer.parseInt(rowKey))==0){
-                        return get;
+
+            @Override
+            public Caso getRowData(String rowKey) {
+                if (rowKey != null && !rowKey.trim().isEmpty() && this.getWrappedData() != null) {
+                    List<Caso> salida = (List<Caso>) this.getWrappedData();
+                    if (!salida.isEmpty()) {
+                        for (Caso get : salida) {
+                            if (get.getIdCaso().compareTo(Integer.parseInt(rowKey)) == 0) {
+                                return get;
+                            }
                         }
                     }
                 }
+                return null;
             }
-            return null;
-            }
-            
-});
+
+        });
         setModeloProceso(new LazyDataModel<Proceso>() {
             @Override
-            public List<Proceso> load(int first, int pageSize,String sortField, SortOrder sortOrder, Map<String, Object> filters){
-            List lista=new ArrayList();
-            if(procesoFacade!=null){
-            this.setRowCount(procesoFacade.count());
-            int[]rango = new int [2];
-            rango[0]= first;
-            rango[1]= pageSize;
-            lista= procesoFacade.findRange(rango);
+            public List<Proceso> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                List lista = new ArrayList();
+                if (procesoFacade != null) {
+                    this.setRowCount(procesoFacade.count());
+                    int[] rango = new int[2];
+                    rango[0] = first;
+                    rango[1] = pageSize;
+                    lista = procesoFacade.findRange(rango);
+                }
+                return lista;
             }
-            return lista;
-            }
-            
+
             @Override
-            public Object getRowKey(Proceso objeto){
-               return objeto.getIdProceso();
+            public Object getRowKey(Proceso objeto) {
+                return objeto.getIdProceso();
             }
-      
-            @Override 
-            public Proceso getRowData(String rowKey){
-            if(rowKey!=null&& !rowKey.trim().isEmpty() && this.getWrappedData()!=null){
-                List<Proceso> salida= (List<Proceso>) this.getWrappedData();
-                if(!salida.isEmpty()){
-                    for(Proceso get: salida){
-                        if(get.getIdProceso().compareTo(Integer.parseInt(rowKey))==0){
-                        return get;
+
+            @Override
+            public Proceso getRowData(String rowKey) {
+                if (rowKey != null && !rowKey.trim().isEmpty() && this.getWrappedData() != null) {
+                    List<Proceso> salida = (List<Proceso>) this.getWrappedData();
+                    if (!salida.isEmpty()) {
+                        for (Proceso get : salida) {
+                            if (get.getIdProceso().compareTo(Integer.parseInt(rowKey)) == 0) {
+                                return get;
+                            }
                         }
                     }
                 }
+                return null;
             }
-            return null;
-            }
-            
-});
+
+        });
         setModeloSolicitud(new LazyDataModel<Solicitud>() {
             @Override
-            public List<Solicitud> load(int first, int pageSize,String sortField, SortOrder sortOrder, Map<String, Object> filters){
-            List lista=new ArrayList();
-            if(solicitud!=null){
-            this.setRowCount(solicitudFacade.count());
-            int[]rango = new int [2];
-            rango[0]= first;
-            rango[1]= pageSize;
-            lista=solicitudFacade.findRange(rango);
+            public List<Solicitud> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                List lista = new ArrayList();
+                if (solicitud != null) {
+                    this.setRowCount(solicitudFacade.count());
+                    int[] rango = new int[2];
+                    rango[0] = first;
+                    rango[1] = pageSize;
+                    lista = solicitudFacade.findRange(rango);
+                }
+                return lista;
             }
-            return lista;
-            }
-            
+
             @Override
-            public Object getRowKey(Solicitud objeto){
-               return objeto.getIdSolicitud();
+            public Object getRowKey(Solicitud objeto) {
+                return objeto.getIdSolicitud();
             }
-      
-            @Override 
-            public Solicitud getRowData(String rowKey){
-            if(rowKey!=null&& !rowKey.trim().isEmpty() && this.getWrappedData()!=null){
-                List<Solicitud> salida= (List<Solicitud>) this.getWrappedData();
-                if(!salida.isEmpty()){
-                    for(Solicitud get: salida){
-                        if(get.getIdSolicitud().compareTo(Integer.parseInt(rowKey))==0){
-                        return get;
+
+            @Override
+            public Solicitud getRowData(String rowKey) {
+                if (rowKey != null && !rowKey.trim().isEmpty() && this.getWrappedData() != null) {
+                    List<Solicitud> salida = (List<Solicitud>) this.getWrappedData();
+                    if (!salida.isEmpty()) {
+                        for (Solicitud get : salida) {
+                            if (get.getIdSolicitud().compareTo(Integer.parseInt(rowKey)) == 0) {
+                                return get;
+                            }
                         }
                     }
                 }
+                return null;
             }
-            return null;
-            }
-            
-});
+
+        });
     }
-    
-    
-    public void Limpiar(){
-    RequestContext.getCurrentInstance().reset("");
+
+    public void Limpiar() {
+        RequestContext.getCurrentInstance().reset("");
     }
-    
-    public void btnNuevo(ActionEvent ae){
-    editar= false;
+
+    public void btnNuevo(ActionEvent ae) {
+        editar = false;
         try {
             Limpiar();
         } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
         }
     }
-    
-    public void btnGuardar(ActionEvent ae){
+
+    public void btnGuardar(ActionEvent ae) {
         try {
-            if(this.caso != null && this.casoFacade != null){
-                
+            if (this.caso != null && this.casoFacade != null) {
+
                 boolean resultado = this.casoFacade.create(caso);
-                
-                FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Creado con exito":"Error", null);
+
+                FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado ? "Creado con exito" : "Error", null);
                 this.agregar = !resultado;
                 FacesContext.getCurrentInstance().addMessage(null, msj);
                 Limpiar();
             }
         } catch (Exception e) {
         }
- 
+
     }
-    
-    public void btnModificar(ActionEvent ae){
-    try{
-            boolean resultado = this.casoFacade.editar(caso); 
-            FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Modificado con exito":"Error", null);
+
+    public void btnModificar(ActionEvent ae) {
+        try {
+            boolean resultado = this.casoFacade.editar(caso);
+            FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado ? "Modificado con exito" : "Error", null);
             this.editar = resultado;
             FacesContext.getCurrentInstance().addMessage(null, msj);
             Limpiar();
-        }catch(Exception e){
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
         }
     }
-    
-     public void btnEliminarAction(ActionEvent ae) {
+
+    public void btnEliminarAction(ActionEvent ae) {
         try {
-            if(this.caso != null && this.casoFacade!= null){
+            if (this.caso != null && this.casoFacade != null) {
                 boolean resultado = this.casoFacade.remove(caso);
-                editar=!resultado;
-                FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado?"Eliminado con exito":"Error", null);
+                editar = !resultado;
+                FacesMessage msj = new FacesMessage(FacesMessage.SEVERITY_INFO, resultado ? "Eliminado con exito" : "Error", null);
                 FacesContext.getCurrentInstance().addMessage(null, msj);
                 Limpiar();
-                
+
             }
         } catch (Exception e) {
-        Logger.getLogger(getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
         }
     }
-     
-      public void cambioTabla(){
+
+    public void cambioTabla() {
         this.editar = true;
     }
-        
+
     public frmCaso() {
     }
-    
+
 }
