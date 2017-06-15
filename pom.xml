@@ -12,6 +12,7 @@
     <module>CasosAcad_App-ejb</module>
   </modules>
     <dependencies>
+      
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
