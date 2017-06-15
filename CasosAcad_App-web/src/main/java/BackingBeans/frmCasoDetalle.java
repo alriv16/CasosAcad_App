@@ -7,7 +7,6 @@ package BackingBeans;
 
 import Entities.CasosAcad.Caso;
 import Entities.CasosAcad.CasoDetalle;
-import Entities.CasosAcad.Solicitud;
 import SessionBeans.CasoDetalleFacadeLocal;
 import SessionBeans.CasoFacadeLocal;
 import java.io.Serializable;
@@ -41,7 +40,8 @@ public class frmCasoDetalle implements Serializable{
     @EJB
     private CasoDetalleFacadeLocal casoDetalleFacade;
     
-    private boolean editar, agregar;
+    private boolean editar;
+    private boolean agregar;
     private LazyDataModel<CasoDetalle> modeloCDetalle;
     private CasoDetalle casoDetalle;
     private LazyDataModel<Caso> modeloCaso;
@@ -96,7 +96,7 @@ public class frmCasoDetalle implements Serializable{
     }
     
     @PostConstruct
-    public void Inicio(){
+    public void inicio(){
         setModeloCDetalle(new LazyDataModel<CasoDetalle>() {
             public List<CasoDetalle> load(int first, int pageSize,String sortField, SortOrder sortOrder, Map<String, Object> filters){
             List lista=new ArrayList();

@@ -53,7 +53,8 @@ public class frmCaso implements Serializable {
     private LazyDataModel<Solicitud> modeloSolicitud;
     private Solicitud solicitud;
     private Proceso proceso;
-    private List lstSolicitud, lstProceso;
+    private List lstSolicitud;
+    private List lstProceso;
 
     public boolean isEditar() {
         return editar;
